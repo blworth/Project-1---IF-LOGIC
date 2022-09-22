@@ -48,17 +48,30 @@ def cpu_random_attack():
     return random_attack
 
 
-def black_knight_dismember(lives_left, attack):
+def black_knight_dismember_print(limbs_left, attack):
 
     if black_knight_lives == 3:
-        lives_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}.  Blood spurts from the knight's open shoulder.Arthur: Now stand aside, worthy adversary. Black Knight: 'Tis but a scratch. Arthur:       A SCRATCH?  Your arm's off! Black Knight: No it isn't! Arthur:       Well what's that then?  (pointing to the arm lying on the ground) Black Knight: I've had worse. Arthur:       You LIAR! Black Knight: Come on, you pansy!")
-        return lives_left
+        limbs_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}.  Blood spurts from the knight's open shoulder.Arthur: Now stand aside, worthy adversary. Black Knight: 'Tis but a scratch. Arthur:       A SCRATCH?  Your arm's off! Black Knight: No it isn't! Arthur:       Well what's that then?  (pointing to the arm lying on the ground) Black Knight: I've had worse. Arthur:       You LIAR! Black Knight: Come on, you pansy!")
+        return limbs_left
     elif black_knight_lives == 2:
-        lives_left = print("2 lives left")
-        return lives_left
+        limbs_left = print("2 lives left")
+        return limbs_left
     elif black_knight_lives == 1:
-        lives_left = print("2 lives left")
-        return lives_left
+        limbs_left = print("2 lives left")
+        return limbs_left
+
+
+def player_blocks_print(blocks_left, attack):
+
+    if player_shield_blocks == 3:
+        blocks_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}. {attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}")
+        return blocks_left
+    elif player_shield_blocks == 2:
+        blocks_left = print("2 lives left")
+        return blocks_left
+    elif player_shield_blocks == 1:
+        blocks_left = print("2 lives left")
+        return blocks_left
 
 
 def main():
@@ -71,7 +84,7 @@ def main():
 
     black_knight_lives = 4
 
-    player_shield_blocks = 10
+    player_shield_blocks = 4
 
     while input1 != "Exit":
 
@@ -120,11 +133,11 @@ def main():
                 if random_attack == "Scissors":
                     # print black night saying oh no my arms! etc until dead
                     black_knight_lives -= 1
-                    black_knight_dismember(black_knight_lives, attack)
+                    black_knight_dismember_print(black_knight_lives, attack)
                     remaining_lives_block()
                 elif random_attack == "Paper":
                     player_shield_blocks -= 1
-                    black_knight_dismember(black_knight_lives, attack)
+                    player_blocks_print(player_shield_blocks, attack)
                     remaining_lives_block()
                 elif random_attack == "Rock":
                     tie()
