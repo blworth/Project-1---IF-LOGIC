@@ -20,9 +20,9 @@ def exit_game():
     print("\n\n\nOh! Had enough, eh?\nCome back and take what's coming to you, you yellow bastard!\nCome back here and take what's coming to you!\n\nI'll bite your legs off!")
 
 
-def remaining_lives_block():
+def remaining_lives_block(black_knight_lives, player_shield_blocks, player):
     print(
-        f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
+        f"Black Knight Limbs Remaining: {black_knight_lives}\n{player}'s Shield Blocks Remaining: {player_shield_blocks}")
 
 # this function assigns king or queen to the player
 
@@ -48,46 +48,56 @@ def cpu_random_attack():
     return random_attack
 
 
-def black_knight_dismember_print(limbs_left, attack):
+def black_knight_dismember_print(black_knight_lives, attack, random_attack, player):
 
     if black_knight_lives == 3:
-        limbs_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}.  Blood spurts from the knight's open shoulder.Arthur: Now stand aside, worthy adversary. Black Knight: 'Tis but a scratch. Arthur:       A SCRATCH?  Your arm's off! Black Knight: No it isn't! Arthur:       Well what's that then?  (pointing to the arm lying on the ground) Black Knight: I've had worse. Arthur:       You LIAR! Black Knight: Come on, you pansy!\n")
-        return limbs_left
+        black_knight_lives = print(f"\n\n\n{player} dodges the Black Knight's {random_attack}, steps aside, and cuts the Black Knight's left arm off with his {attack}. Blood spurts from the knight's open shoulder.\n\n{player}: Now stand aside, worthy adversary.\nBlack Knight: 'Tis but a scratch.\n{player}: A SCRATCH? Your arm's off!\nBlack Knight: No it isn't!\n{player}: Well what's that then? (pointing to the arm lying on the ground)\nBlack Knight: I've had worse.\n{player}: You LIAR!\nBlack Knight: Come on, you pansy!\n")
+        return black_knight_lives
     elif black_knight_lives == 2:
-        limbs_left = print("2 lives left")
-        return limbs_left
+        black_knight_lives = print(f"\n\n\n{player} dodges the armless Black Night's swift {random_attack} kick! {player} easily cuts off the black knight's right arm causing it to drop to the ground. Blood spatters freely from the stump.\n\nBlack Knight: Come on then!\n{player}: What?!?\nBlack Knight: Have at you!\n{player}: You are indeed brave, sir knight, but the fight is mine!.\nBlack Knight: Ohhh, had enough, eh?\n{player}: Look, you stupid bastard, you've got no arms left!\nBlack Knight: Yes I have!\n{player}: LOOK!!!\nBlack Knight: Just a flesh wound!")
+        return black_knight_lives
     elif black_knight_lives == 1:
-        limbs_left = print("2 lives left")
-        return limbs_left
+        black_knight_lives = print("1 lives left")
+        return black_knight_lives
 
 
-def player_blocks_print(blocks_left, random_attack, answer_king_queen):
+def player_blocks_print(blocks_left, random_attack, answer_king_queen, black_knight_lives, player_shield_blocks, player):
 
-    if player_shield_blocks == 3:
+    if player_shield_blocks == 3 and black_knight_lives > 2:
         blocks_left = print(
             f"\nThe Black Knight dodges {player}'s strike, and hurls his {random_attack} at {player}.\n\n{player} blocks the Black Knight's {random_attack} but remains unscathed!\n\n{player}: Aha! You are as weak as I thought!\nBlack Knight: None before have passed! You will see!\n")
         return blocks_left
-    elif player_shield_blocks == 2:
+    elif player_shield_blocks == 3 and black_knight_lives <= 2:
+        blocks_left = print(
+            f"\n Surprising fast for having no arms, the Black Knight dodges {player}'s strike, and kicks his {random_attack} at {player}.\n\n{player} blocks the Black Knight's {random_attack} but remains unscathed!\n\n{player}: Aha! You are as weak as I thought!\nBlack Knight: None before have passed! I need no arms to show you that! You will see!\n")
+        return blocks_left
+    elif player_shield_blocks == 2 and black_knight_lives > 2:
         blocks_left = print(
             f"\n\nOnce again the Black Knight dodges {player}'s strike, and catapult's his {random_attack} at {player}.\n\n {player} barely blocks the Black Knight's {random_attack} and stumbles backwards from the blow!\n\nThat was a clsoe one sir knight! But I am a {answer_king_queen}, do you think I would be so easily conquered?\n")
-        return blocks_left
-    elif player_shield_blocks == 1:
+    elif player_shield_blocks == 2 and black_knight_lives <= 2:
         blocks_left = print(
-            f"\n\n\nThe Black Knight dodges {player}'s strike, and hurls his {random_attack} at {player}.\n\n {player} blocks the Black Knight's {random_attack} but remains unscathed!\n")
+            f"\n\nOnce again the Black Knight dodges {player}'s strike, and super kicks his {random_attack} at {player}.\n\n {player} barely blocks the Black Knight's {random_attack} and stumbles backwards from the blow!\n\nThat was a close one sir knight! But I am a {answer_king_queen}, do you think I would be so easily conquered?\n\n Black Knight: You will soon fall to the legless Black Knight!\n")
+        return blocks_left
+    elif player_shield_blocks == 1 and black_knight_lives > 2:
+        blocks_left = print(
+            f"\n\nknight hurls {random_attack} at {player}\n")
+    elif player_shield_blocks == 1 and black_knight_lives > 2:
+        blocks_left = print(
+            f"\n\n, the Black Knight dodges {player}'s strike, and kicks his random_attack at player knocks over {player} and destoys the {answer_king_queen}'s shield {player}: (getting up) blah blah blah\n")
         return blocks_left
 
 
 def main():
-    global black_knight_lives
-    global player_shield_blocks
-    global player
+    # global black_knight_lives
+    # global player_shield_blocks
+    # global player
     # global attack
 
     input1 = ""
 
     black_knight_lives = 4
 
-    player_shield_blocks = 4
+    player_shield_blocks = 3
 
     while input1 != "Exit":
 
@@ -96,7 +106,7 @@ def main():
         player = input("Please enter your name: ").capitalize()
         answer_king_queen = pick_king_queen()
 
-        print(f"\n\n\nOkay {player}, Let's go ahead and start the adventure!\n\nPlease enter:\n   '1' to grab your coconuts and gallop away!\n   'exit' to end your journey.")
+        print(f"\n\n\nOkay {answer_king_queen} {player}, Let's go ahead and start the adventure!\n\nPlease enter:\n   '1' to grab your coconuts and gallop away!\n   'exit' to end your journey.")
 
         while (input1 != 1 or input1 != "Exit"):
             input1 = input("    ")
@@ -109,7 +119,7 @@ def main():
                 break
             if input2 == 1:
                 print(
-                    f"\n\n\n'clop clop clop'\n\n'clop clop clop'\n\n'clop clop clop\n\n Aha, it seems we have arrived!\n\n\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: (taken aback) What?\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: I have no quarrel with you, good sir knight, but I must cross this bridge.\n\nBlack Knight: THEN YOU SHALL DIE.\n\n{player}: I *command* you, as {answer_king_queen} of the Britons, to stand aside.\n\nBlack Knight: I MOVE FOR NO {answer_king_queen.upper()}.\n\n{player}: So be it!   (draws hand and shield)")
+                    f"\n\n\n'clop clop clop'\n\n'clop clop clop'\n\n'clop clop clop\n\n chhange this to the script of seeing black knight fight at bridge!\n\n\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: (taken aback) What?\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: I have no quarrel with you, good sir knight, but I must cross this bridge.\n\nBlack Knight: THEN YOU SHALL DIE.\n\n{player}: I *command* you, as {answer_king_queen} of the Britons, to stand aside.\n\nBlack Knight: I MOVE FOR NO {answer_king_queen.upper()}.\n\n{player}: So be it!   (draws hand and shield)")
                 break
             if input1.capitalize() == "Exit":
                 exit_game()
@@ -118,12 +128,15 @@ def main():
                 print("Please enter '1' or 'exit'.")
 
         while (input1 != "Exit"):
-            if player_shield_blocks == 0 or black_knight_lives == 0:
+            if player_shield_blocks < 0 or black_knight_lives == 0:
                 break
 
             print(
                 "\n\n\nChoose your attack: 'Rock', 'Paper', 'Scissors', 'Flesh Wound'")
+            remaining_lives_block(
+                black_knight_lives, player_shield_blocks, player)
 
+            # make a if statement to only write the battle ensues statement when limbs are 4 and blocks are 3, so it only goes once
             attack = player_attack()
             print(
                 f"A battle ensues, where {player}, realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight. ")
@@ -136,16 +149,20 @@ def main():
                 if random_attack == "Scissors":
                     # print black night saying oh no my arms! etc until dead
                     black_knight_lives -= 1
-                    black_knight_dismember_print(black_knight_lives, attack)
-                    remaining_lives_block()
+                    black_knight_dismember_print(
+                        black_knight_lives, attack, random_attack, player)
+                    # remaining_lives_block(
+                    #     black_knight_lives, player_shield_blocks, player)
                 elif random_attack == "Paper":
                     player_shield_blocks -= 1
                     player_blocks_print(
-                        player_shield_blocks, random_attack, answer_king_queen)
-                    remaining_lives_block()
+                        player_shield_blocks, random_attack, answer_king_queen, black_knight_lives, player_shield_blocks, player)
+                    # remaining_lives_block(
+                    #     black_knight_lives, player_shield_blocks, player)
                 elif random_attack == "Rock":
                     tie()
-                    remaining_lives_block()
+                    # remaining_lives_block(
+                    #     black_knight_lives, player_shield_blocks, player)
 
             if attack == "Paper":
                 print(
@@ -205,3 +222,5 @@ if __name__ == "__main__":
 
 # TODO fix the if statement so the script wont show when black knight contineus to stay at 3 lives and the p[layer goes down, only show when black knight lsoes his life!
 # TODO do more parameter stuff!
+# TODO use crayon.red from lab 34 to add color to the text!
+# TODO add you cannot stand a chance now to armless and legless black night and wreite <pun> next to it lol
