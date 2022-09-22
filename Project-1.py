@@ -51,7 +51,7 @@ def cpu_random_attack():
 def black_knight_dismember_print(limbs_left, attack):
 
     if black_knight_lives == 3:
-        limbs_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}.  Blood spurts from the knight's open shoulder.Arthur: Now stand aside, worthy adversary. Black Knight: 'Tis but a scratch. Arthur:       A SCRATCH?  Your arm's off! Black Knight: No it isn't! Arthur:       Well what's that then?  (pointing to the arm lying on the ground) Black Knight: I've had worse. Arthur:       You LIAR! Black Knight: Come on, you pansy!")
+        limbs_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}.  Blood spurts from the knight's open shoulder.Arthur: Now stand aside, worthy adversary. Black Knight: 'Tis but a scratch. Arthur:       A SCRATCH?  Your arm's off! Black Knight: No it isn't! Arthur:       Well what's that then?  (pointing to the arm lying on the ground) Black Knight: I've had worse. Arthur:       You LIAR! Black Knight: Come on, you pansy!\n")
         return limbs_left
     elif black_knight_lives == 2:
         limbs_left = print("2 lives left")
@@ -61,16 +61,19 @@ def black_knight_dismember_print(limbs_left, attack):
         return limbs_left
 
 
-def player_blocks_print(blocks_left, attack):
+def player_blocks_print(blocks_left, random_attack, answer_king_queen):
 
     if player_shield_blocks == 3:
-        blocks_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}. {attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}{attack}")
+        blocks_left = print(
+            f"\nThe Black Knight dodges {player}'s strike, and hurls his {random_attack} at {player}.\n\n{player} blocks the Black Knight's {random_attack} but remains unscathed!\n\n{player}: Aha! You are as weak as I thought!\nBlack Knight: None before have passed! You will see!\n")
         return blocks_left
     elif player_shield_blocks == 2:
-        blocks_left = print("2 lives left")
+        blocks_left = print(
+            f"\n\nOnce again the Black Knight dodges {player}'s strike, and catapult's his {random_attack} at {player}.\n\n {player} barely blocks the Black Knight's {random_attack} and stumbles backwards from the blow!\n\nThat was a clsoe one sir knight! But I am a {answer_king_queen}, do you think I would be so easily conquered?\n")
         return blocks_left
     elif player_shield_blocks == 1:
-        blocks_left = print("2 lives left")
+        blocks_left = print(
+            f"\n\n\nThe Black Knight dodges {player}'s strike, and hurls his {random_attack} at {player}.\n\n {player} blocks the Black Knight's {random_attack} but remains unscathed!\n")
         return blocks_left
 
 
@@ -137,7 +140,8 @@ def main():
                     remaining_lives_block()
                 elif random_attack == "Paper":
                     player_shield_blocks -= 1
-                    player_blocks_print(player_shield_blocks, attack)
+                    player_blocks_print(
+                        player_shield_blocks, random_attack, answer_king_queen)
                     remaining_lives_block()
                 elif random_attack == "Rock":
                     tie()
