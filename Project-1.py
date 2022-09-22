@@ -7,8 +7,22 @@ import random
 # this function will end the game when executed
 
 
+def player_attack():
+    input1 = input("    ").capitalize()
+    return input1
+
+
+def tie():
+    print("\n\n\n Black Knight: Ah foe, you think you can equal my strength?! Accept your luck. It will run out!")
+
+
 def exit_game():
     print("\n\n\nOh! Had enough, eh?\nCome back and take what's coming to you, you yellow bastard!\nCome back here and take what's coming to you!\n\nI'll bite your legs off!")
+
+
+def remaining_lives_block():
+    print(
+        f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
 
 # this function assigns king or queen to the player
 
@@ -34,13 +48,30 @@ def cpu_random_attack():
     return random_attack
 
 
+def black_knight_dismember(lives_left, attack):
+
+    if black_knight_lives == 3:
+        lives_left = print(f"\n\n\n{player} dodges a strike, steps aside, and cuts the Black Knight's left arm off withhis {attack}.  Blood spurts from the knight's open shoulder.Arthur: Now stand aside, worthy adversary. Black Knight: 'Tis but a scratch. Arthur:       A SCRATCH?  Your arm's off! Black Knight: No it isn't! Arthur:       Well what's that then?  (pointing to the arm lying on the ground) Black Knight: I've had worse. Arthur:       You LIAR! Black Knight: Come on, you pansy!")
+        return lives_left
+    elif black_knight_lives == 2:
+        lives_left = print("2 lives left")
+        return lives_left
+    elif black_knight_lives == 1:
+        lives_left = print("2 lives left")
+        return lives_left
+
+
 def main():
+    global black_knight_lives
+    global player_shield_blocks
+    global player
+    # global attack
 
     input1 = ""
 
-    black_knight_lives = 3
+    black_knight_lives = 4
 
-    player_lives = 3
+    player_shield_blocks = 10
 
     while input1 != "Exit":
 
@@ -62,7 +93,7 @@ def main():
                 break
             if input2 == 1:
                 print(
-                    f"\n\n\n'clop clop clop'\n\n'clop clop clop'\n\n'clop clop clop\n\n Aha, it seems we have arrived!\n\n\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: (taken aback) What?\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: I have no quarrel with you, good sir knight, but I must cross this bridge.\n\nBlack Knight: THEN YOU SHALL DIE.\n\n{player}: I *command* you, as {answer_king_queen} of the Britons, to stand aside.\n\nBlack Knight: I MOVE FOR NO {answer_king_queen.upper()}.\n\n{player}: So be it!   (draws hands)")
+                    f"\n\n\n'clop clop clop'\n\n'clop clop clop'\n\n'clop clop clop\n\n Aha, it seems we have arrived!\n\n\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: (taken aback) What?\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: I have no quarrel with you, good sir knight, but I must cross this bridge.\n\nBlack Knight: THEN YOU SHALL DIE.\n\n{player}: I *command* you, as {answer_king_queen} of the Britons, to stand aside.\n\nBlack Knight: I MOVE FOR NO {answer_king_queen.upper()}.\n\n{player}: So be it!   (draws hand and shield)")
                 break
             if input1.capitalize() == "Exit":
                 exit_game()
@@ -71,64 +102,63 @@ def main():
                 print("Please enter '1' or 'exit'.")
 
         while (input1 != "Exit"):
-            if player_lives == 0 or black_knight_lives == 0:
+            if player_shield_blocks == 0 or black_knight_lives == 0:
                 break
 
             print(
                 "\n\n\nChoose your attack: 'Rock', 'Paper', 'Scissors', 'Flesh Wound'")
 
-            input1 = input("    ").capitalize()
+            attack = player_attack()
+            print(
+                f"A battle ensues, where {player}, realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight. ")
             random_attack = cpu_random_attack()
 
-            if input1 == "Rock":
+            if attack == "Rock":
                 print(
-                    f"\n\n\nAh, {player}, a very 'hardy' attack... the the Black Knight has chosen {random_attack}")
+                    f"\n\n\n{player} strikes the Black Knight with a very hard {attack}... the the Black Knight simultaneously strikes back with his {random_attack}")
 
                 if random_attack == "Scissors":
-                    print("winrock")
+                    # print black night saying oh no my arms! etc until dead
                     black_knight_lives -= 1
-                    print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                    black_knight_dismember(black_knight_lives, attack)
+                    remaining_lives_block()
                 elif random_attack == "Paper":
-                    print("lose")
-                    player_lives -= 1
-                    print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                    player_shield_blocks -= 1
+                    black_knight_dismember(black_knight_lives, attack)
+                    remaining_lives_block()
                 elif random_attack == "Rock":
-                    print(
-                        "\n\n\n Black Knight: Ah foe, you think you can equal my strength?! Accept your luck. It will run out!")
-                    print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                    tie()
+                    remaining_lives_block()
 
-            if input1 == "Paper":
+            if attack == "Paper":
                 print(
-                    f"\n\n\nAh, {player}, a very 'crinkly' attack... the the Black Knight has chosen {cpu_random_attack()}")
-                if input1 == "Paper" and cpu_random_attack() == "Rock":
+                    f"\n\n\n{player} strikes the Black Knight with a very 'crinkly' attack... the the Black Knight has chosen {cpu_random_attack()}")
+                if attack == "Paper" and cpu_random_attack() == "Rock":
                     print("winpaper")
                     black_knight_lives -= 1
                     print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                        f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
 
-                elif input1 == "Paper" and cpu_random_attack() == "Scissors":
+                elif attack == "Paper" and cpu_random_attack() == "Scissors":
                     print("lose")
-                    player_lives -= 1
+                    player_shield_blocks -= 1
                     print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                        f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
 
-            if input1 == "Scissors":
+            if attack == "Scissors":
                 print(
-                    f"\n\n\nAh, {player}, a very 'sharp' attack... the the Black Knight has chosen {cpu_random_attack()}")
-                if input1 == "Scissors" and cpu_random_attack() == "Paper":
+                    f"\n\n\n{player} strikes the Black Knight with a very 'sharp' attack... the the Black Knight has chosen {cpu_random_attack()}")
+                if attack == "Scissors" and cpu_random_attack() == "Paper":
                     print("winscissors")
                     black_knight_lives -= 1
                     print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                        f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
 
                 elif input1 == "Scissors" and cpu_random_attack() == "Rock":
                     print("lose")
-                    player_lives -= 1
+                    player_shield_blocks -= 1
                     print(
-                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                        f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
         break
 
         # if input1 == "Rock" and random_attack == "Scissors":
@@ -154,3 +184,7 @@ def main():
 # TODO while loops for attacks
 if __name__ == "__main__":
     main()
+
+
+# TODO fix the if statement so the script wont show when black knight contineus to stay at 3 lives and the p[layer goes down, only show when black knight lsoes his life!
+# TODO do more parameter stuff!
