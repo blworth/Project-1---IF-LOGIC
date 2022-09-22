@@ -28,14 +28,19 @@ def pick_king_queen():
     return king_queen
 
 
-attack_choices = ("Rock", "Paper", "Scissors")
-
-random_attack = random.choice(attack_choices)
+def cpu_random_attack():
+    attack_choices = ("Rock", "Paper", "Scissors")
+    random_attack = random.choice(attack_choices)
+    return random_attack
 
 
 def main():
 
     input1 = ""
+
+    black_knight_lives = 3
+
+    player_lives = 3
 
     while input1 != "Exit":
 
@@ -65,33 +70,87 @@ def main():
             else:
                 print("Please enter '1' or 'exit'.")
 
-        print("\n\n\nChoose your attack: 'Rock', 'Paper', 'Scissors', 'Flesh Wound'")
+        while (input1 != "Exit"):
+            if player_lives == 0 or black_knight_lives == 0:
+                break
 
-        while (input1 != "Rock" or input1 != "Paper" or input1 != "Scissors" or input1 != "Flesh Wound"):
+            print(
+                "\n\n\nChoose your attack: 'Rock', 'Paper', 'Scissors', 'Flesh Wound'")
+
             input1 = input("    ").capitalize()
+            random_attack = cpu_random_attack()
+
             if input1 == "Rock":
                 print(
-                    f"Ah, {player} very 'hardy' attack, the the Black Knight has chosen {random_attack}")
-                break
+                    f"\n\n\nAh, {player}, a very 'hardy' attack... the the Black Knight has chosen {random_attack}")
 
-            elif input1 == "Rock":
-                print("test2")
-                break
-            elif input1 == "Rock":
-                print("test3")
-                break
-            elif input1 == "Rock":
-                print("test4")
-                break
-            else:
+                if random_attack == "Scissors":
+                    print("winrock")
+                    black_knight_lives -= 1
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                elif random_attack == "Paper":
+                    print("lose")
+                    player_lives -= 1
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+                elif random_attack == "Rock":
+                    print(
+                        "\n\n\n Black Knight: Ah foe, you think you can equal my strength?! Accept your luck. It will run out!")
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+
+            if input1 == "Paper":
                 print(
-                    "\n\n\nChoose your attack: 'Rock', 'Paper', 'Scissors', 'Flesh Wound'")
-                break
+                    f"\n\n\nAh, {player}, a very 'crinkly' attack... the the Black Knight has chosen {cpu_random_attack()}")
+                if input1 == "Paper" and cpu_random_attack() == "Rock":
+                    print("winpaper")
+                    black_knight_lives -= 1
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
 
+                elif input1 == "Paper" and cpu_random_attack() == "Scissors":
+                    print("lose")
+                    player_lives -= 1
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+
+            if input1 == "Scissors":
+                print(
+                    f"\n\n\nAh, {player}, a very 'sharp' attack... the the Black Knight has chosen {cpu_random_attack()}")
+                if input1 == "Scissors" and cpu_random_attack() == "Paper":
+                    print("winscissors")
+                    black_knight_lives -= 1
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
+
+                elif input1 == "Scissors" and cpu_random_attack() == "Rock":
+                    print("lose")
+                    player_lives -= 1
+                    print(
+                        f"Black Knight Lives: {black_knight_lives}\n{player}: {player_lives}")
         break
 
+        # if input1 == "Rock" and random_attack == "Scissors":
+        #     print("win")
+        #     break
+        # elif input1 == "Rock" and random_attack == "Paper":
+        #     print("lose")
+        #     break
+        # elif input1 == "Paper" and random_attack == "Rock":
+        #     print("win")
+        #     break
+        # elif input1 == "Paper" and random_attack == "Scissors":
+        #     print("lose")
+        #     break
+        # elif input1 == "Scissors" and random_attack == "Rock":
+        #     print("lose")
+        #     break
+        # elif input1 == "Scissors" and random_attack == "Paper":
+        #     print("win")
+        #     break
+
+
 # TODO while loops for attacks
-
-
 if __name__ == "__main__":
     main()
