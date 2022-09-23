@@ -10,26 +10,26 @@ import crayons
 # this function will end the game when executed
 
 
-def player_attack(player_shield_blocks, black_knight_lives, player):
+def player_attack(player_shield_blocks, black_knight_lives, player, Y):
     input1 = input("    ").capitalize()
 
     if player_shield_blocks == 3 and black_knight_lives == 4:
         print(
-            f"\n\nA battle ensues, where {player}, realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight. ")
+            f"\n\n\n{Y(f'A battle ensues, where {player}')}{Y(', realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight.')}")
     return input1
 
 
-def tie():
-    print("\n\n\n Black Knight: Ah foe, you think you can equal my strength?! Accept your luck. It will run out!")
+def tie(Y, knight):
+    print(f"\n\n\n{knight}{Y(': Ah foe, you think you can equal my strength?! Accept your luck. It will run out!')}")
 
 
-def exit_game():
-    print("\n\n\nOh! Had enough, eh?\nCome back and take what's coming to you, you yellow bastard!\nCome back here and take what's coming to you!\n\nI'll bite your legs off!")
+def exit_game(Y, punc):
+    print(f"\n\n\n{Y('Oh! Had enough, eh?')}\n{Y(f'Come back and take what{punc}s coming to you, you yellow bastard!')}\n{Y(f'Come back here and take what{punc}s coming to you!')}\n\n{Y(f'I{punc}ll bite your legs off!')}")
 
 
-def remaining_lives_block(black_knight_lives, player_shield_blocks, player):
+def remaining_lives_block(black_knight_lives, player_shield_blocks, player, knight, Y, punc):
     print(
-        f"Black Knight Limbs Remaining: {black_knight_lives}\n{player}'s Shield Blocks Remaining: {player_shield_blocks}")
+        f"{Y(f'{knight}')} {Y(f'Limbs Remaining: {black_knight_lives}')}\n{Y(f'{player}')}{Y(f'{punc}s Shield Blocks Remaining: ')}{Y(f'{player_shield_blocks}')}")
 
 # this function assigns king or queen to the player
 
@@ -41,23 +41,26 @@ def pick_name(Y):
     return crayons.cyan(name)
 
 
-def pick_king_queen(Y):
+def pick_king_queen(Y, punc, R):
     # global king_queen
     king_queen = ""
+    king = crayons.cyan("King")
+    queen = crayons.cyan("Queen")
 
     while king_queen != "King" or king_queen != "Queen":
-        print(f"{Y('Would you prefer to be a King or a Queen? ')}")
+        print(f"{Y(f'Would you prefer to be a {king}')} {Y(f'or a {queen}')}{Y('? ')}")
         king_queen = input("    ").capitalize()
 
         if king_queen == "King" or king_queen == "Queen":
             break
         else:
-            print(f"{Y('Please enter King or Queen.')}")
+            print(
+                f"{R(f'Please enter {punc}{king}')}{R(f'{punc} or {punc}')}{R(f'{queen}')}{R(f'{punc}.')}\n")
     return crayons.cyan(king_queen)
 
 
-def cpu_random_attack():
-    attack_choices = ("Rock", "Paper", "Scissors")
+def cpu_random_attack(rock, paper, scissors):
+    attack_choices = ((f"{rock}"), (f"{paper}"), (f"{scissors}"))
     random_attack = random.choice(attack_choices)
     return random_attack
 
@@ -108,11 +111,20 @@ def main():
     # global attack
 
     input1 = ""
-    R = crayons.blue('Rock')
-    P = crayons.green('Paper')
-    S = crayons.black('Scissors')
-    F = crayons.red('Flesh Wound')
+    rock = crayons.blue('Rock')
+    paper = crayons.green('Paper')
+    scissors = crayons.black('Scissors')
+    flesh = crayons.red('Flesh Wound')
     Y = crayons.yellow
+    R = crayons.red
+    # fix all the stud make rock be rock not R and etc make yellow be yellow not Y
+    # knight be knight not b
+    # TODO also change and where there is queen or king to the cyan and anywhere you see knight to the knight magenta
+    knight = crayons.magenta('Black Knight')
+    you = crayons.cyan('you')
+    one = crayons.cyan('1')
+    Exit = crayons.cyan('Exit')
+    punc = "'"
 
     black_knight_lives = 4
 
@@ -120,12 +132,12 @@ def main():
 
     while input1 != "Exit":
 
-        print(f"\n\n{crayons.yellow('Welcome to')} {R}, {P}, {S}, {F}.\n\n      {crayons.yellow('In this game you will be playing against the Black Knight from Monty Python and the Holy Grail.')}\n      {crayons.yellow('The goal is to to beat the Black Knight and cross the bridge by choosing 1 of the 4 options available:')}\n\n\n{R}:\n   {Y('Wins against')} {S}\n   {Y('Loses against')} {P}.\n{P}:\n   {Y('Wins against')} {R}\n   {Y('Loses against')} {S}.\n{S}:\n   {Y('Wins against')} {P}\n   {Y('Loses against')} {R}.\n{F}:\n   {Y('You will see...')}\n\n\n")
+        print(f"\n\n{crayons.yellow('Welcome to')} {rock}, {paper}, {scissors}, {flesh}.\n\n      {crayons.yellow(f'In this game {you}')} {Y(f'will be playing against the {knight}')} {Y('from Monty Python and the Holy Grail.')}\n      {crayons.yellow(f'The goal is to to beat the {knight}')} {Y('and cross the bridge by choosing 1 of the 4 options available:')}\n\n{rock}{Y(':')}\n   {Y('Wins against')} {scissors}\n   {Y('Loses against')} {paper}\n\n{paper}{Y(':')}\n   {Y('Wins against')} {rock}\n   {Y('Loses against')} {scissors}\n\n{scissors}{Y(':')}\n   {Y('Wins against')} {paper}\n   {Y('Loses against')} {rock}\n\n{flesh}{Y(':')}\n   {Y('You will see...')}\n\n\n")
 
         player = pick_name(Y)
-        answer_king_queen = pick_king_queen(Y)
+        answer_king_queen = pick_king_queen(Y, punc, R)
 
-        print(f"\n\n\n{Y('Okay')} {answer_king_queen} {player}, Let's go ahead and start the adventure!\n\nPlease enter:\n   '1' to grab your coconuts and gallop away!\n   'exit' to end your journey.")
+        print(f"\n\n\n{Y('Okay')} {answer_king_queen} {player}{Y(f', Let{punc}s go ahead and start the adventure!')}\n\n{Y('Please enter:')}\n   {Y(f'{punc}{one}')}{Y(f'{punc} to grab your coconuts and gallop away!')}\n   {Y(f'{punc}{Exit}')}{Y(f'{punc} to end your journey.')}")
 
         while (input1 != 1 or input1 != "Exit"):
             input1 = input("    ")
@@ -134,31 +146,29 @@ def main():
             if input1.isdigit():
                 input2 = int(input1)
             elif input1.capitalize() == "Exit":
-                exit_game()
-                break
+                exit_game(Y, punc)
+                quit()
             if input2 == 1:
                 print(
-                    f"\n\n\n'clop clop clop'\n\n'clop clop clop'\n\n'clop clop clop\n\n chhange this to the script of seeing black knight fight at bridge!\n\n\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: (taken aback) What?\n\nBlack Knight: NONE SHALL PASS.\n\n{player}: I have no quarrel with you, good sir knight, but I must cross this bridge.\n\nBlack Knight: THEN YOU SHALL DIE.\n\n{player}: I *command* you, as {answer_king_queen} of the Britons, to stand aside.\n\nBlack Knight: I MOVE FOR NO {answer_king_queen.upper()}.\n\n{player}: So be it!   (draws hand and shield)")
-                break
-            if input1.capitalize() == "Exit":
-                exit_game()
+                    f"\n\n\n{Y('<clop clop clop>')}\n\n{Y('<clop clop clop>')}\n\n{Y('<clop clop clop>')}\n\n{Y('chhange this to the script of seeing black knight fight at bridge!')}\n\n\n\n{Y(f'{knight}')}{Y(': NONE SHALL PASS.')}\n\n{Y(f'{player}')}{Y(': (taken aback) What?')}\n\n{Y(f'{knight}')}{Y(': NONE SHALL PASS.')}\n\n{Y(f'{player}')}{Y(': I have no quarrel with you, good sir knight, but I must cross this bridge.')}\n\n{Y(f'{knight}')}{Y(': THEN YOU SHALL DIE.')}\n\n{Y(f'{player}')}{Y(f': I *command* you, as {answer_king_queen}')}{Y(' of the Britons, to stand aside.')}\n\n{Y(f'{knight}')}{Y(f': I MOVE FOR NO {answer_king_queen.upper()}')}{Y('.')}\n\n{Y(f'{player}')}{Y(': So be it!   (draws hand and shield)')}")
                 break
             else:
-                print("Please enter '1' or 'exit'.")
+                print(
+                    f"{R(f'Please enter {punc}{one}')}{R(f'{punc} or {punc}{Exit}')}{R(f'{punc}.')}")
 
         while (input1 != "Exit"):
             if player_shield_blocks < 0 or black_knight_lives == 0:
                 break
 
             print(
-                "\n\n\nChoose your attack: 'Rock', 'Paper', 'Scissors', 'Flesh Wound'")
+                f"\n\n\n{Y('Choose your attack: ')}{Y(f'{rock}')}{Y(',')} {Y(f'{paper}')}{Y(',')} {Y(f'{scissors}')}{Y(',')} {Y(f'{flesh}')}{Y('.')}")
             remaining_lives_block(
-                black_knight_lives, player_shield_blocks, player)
+                black_knight_lives, player_shield_blocks, player, knight, Y, punc)
 
             # make a if statement to only write the battle ensues statement when limbs are 4 and blocks are 3, so it only goes once
             attack = player_attack(player_shield_blocks,
-                                   black_knight_lives, player)
-            random_attack = cpu_random_attack()
+                                   black_knight_lives, player, Y)
+            random_attack = cpu_random_attack(rock, paper, scissors)
 
             if attack == "Rock":
                 print(
@@ -178,7 +188,7 @@ def main():
                     # remaining_lives_block(
                     #     black_knight_lives, player_shield_blocks, player)
                 elif random_attack == "Rock":
-                    tie()
+                    tie(Y, knight)
                     # remaining_lives_block(
                     #     black_knight_lives, player_shield_blocks, player)
 
