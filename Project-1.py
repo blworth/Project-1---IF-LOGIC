@@ -4,11 +4,18 @@
 
 import random
 
+import crayons
+
+
 # this function will end the game when executed
 
 
-def player_attack():
+def player_attack(player_shield_blocks, black_knight_lives, player):
     input1 = input("    ").capitalize()
+
+    if player_shield_blocks == 3 and black_knight_lives == 4:
+        print(
+            f"\n\nA battle ensues, where {player}, realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight. ")
     return input1
 
 
@@ -27,19 +34,26 @@ def remaining_lives_block(black_knight_lives, player_shield_blocks, player):
 # this function assigns king or queen to the player
 
 
-def pick_king_queen():
+def pick_name(Y):
+    # global king_queen
+    print(f"{Y('Please enter your name: ')}")
+    name = input("    ").capitalize()
+    return crayons.cyan(name)
+
+
+def pick_king_queen(Y):
     # global king_queen
     king_queen = ""
 
     while king_queen != "King" or king_queen != "Queen":
-        king_queen = input(
-            "Would you prefer to be a King or a Queen? ").capitalize()
+        print(f"{Y('Would you prefer to be a King or a Queen? ')}")
+        king_queen = input("    ").capitalize()
 
         if king_queen == "King" or king_queen == "Queen":
             break
         else:
-            print("Please enter 'King' or 'Queen'.")
-    return king_queen
+            print(f"{Y('Please enter King or Queen.')}")
+    return crayons.cyan(king_queen)
 
 
 def cpu_random_attack():
@@ -94,6 +108,11 @@ def main():
     # global attack
 
     input1 = ""
+    R = crayons.blue('Rock')
+    P = crayons.green('Paper')
+    S = crayons.black('Scissors')
+    F = crayons.red('Flesh Wound')
+    Y = crayons.yellow
 
     black_knight_lives = 4
 
@@ -101,12 +120,12 @@ def main():
 
     while input1 != "Exit":
 
-        print("\n\n\nWelcome to Rock, Paper, Scissors, Flesh Wound.\n\n      In this game you will be playing against the Black Knight from Monty Python and the Holy Grail.\n      The goal is to to beat the Black Knight and cross the bridge by choosing 1 of the 4 options available:\n\n\n\nRock:\n   Wins against Scissors\n   Loses against Paper.\n\nPaper:\n   Wins against Rock\n   Loses against Scissors.\n\nScissors:\n   Wins against Paper\n   Loses against Rock.\n\nFlesh Wound:\n   You'll see...\n\n\n")
+        print(f"\n\n{crayons.yellow('Welcome to')} {R}, {P}, {S}, {F}.\n\n      {crayons.yellow('In this game you will be playing against the Black Knight from Monty Python and the Holy Grail.')}\n      {crayons.yellow('The goal is to to beat the Black Knight and cross the bridge by choosing 1 of the 4 options available:')}\n\n\n{R}:\n   {Y('Wins against')} {S}\n   {Y('Loses against')} {P}.\n{P}:\n   {Y('Wins against')} {R}\n   {Y('Loses against')} {S}.\n{S}:\n   {Y('Wins against')} {P}\n   {Y('Loses against')} {R}.\n{F}:\n   {Y('You will see...')}\n\n\n")
 
-        player = input("Please enter your name: ").capitalize()
-        answer_king_queen = pick_king_queen()
+        player = pick_name(Y)
+        answer_king_queen = pick_king_queen(Y)
 
-        print(f"\n\n\nOkay {answer_king_queen} {player}, Let's go ahead and start the adventure!\n\nPlease enter:\n   '1' to grab your coconuts and gallop away!\n   'exit' to end your journey.")
+        print(f"\n\n\n{Y('Okay')} {answer_king_queen} {player}, Let's go ahead and start the adventure!\n\nPlease enter:\n   '1' to grab your coconuts and gallop away!\n   'exit' to end your journey.")
 
         while (input1 != 1 or input1 != "Exit"):
             input1 = input("    ")
@@ -137,9 +156,8 @@ def main():
                 black_knight_lives, player_shield_blocks, player)
 
             # make a if statement to only write the battle ensues statement when limbs are 4 and blocks are 3, so it only goes once
-            attack = player_attack()
-            print(
-                f"A battle ensues, where {player}, realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight. ")
+            attack = player_attack(player_shield_blocks,
+                                   black_knight_lives, player)
             random_attack = cpu_random_attack()
 
             if attack == "Rock":
