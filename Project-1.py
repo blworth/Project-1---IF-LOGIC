@@ -13,7 +13,7 @@ import crayons
 def player_attack(player_shield_blocks, black_knight_lives, player, Y):
     input1 = input("    ").capitalize()
 
-    if player_shield_blocks == 3 and black_knight_lives == 4:
+    if player_shield_blocks == 3 and black_knight_lives == 4 and (input1 == "Rock" or input1 == "Paper" or input1 == "Scissors" or input1 == "Flesh Wound"):
         print(
             f"\n\n\n{Y(f'A battle ensues, where {player}')}{Y(', realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the Black Knight.')}")
     return input1
@@ -65,42 +65,49 @@ def cpu_random_attack(rock, paper, scissors):
     return random_attack
 
 
-def black_knight_dismember_print(black_knight_lives, attack, random_attack, player):
+def black_knight_dismember_print(black_knight_lives, attack, random_attack, player, Y, punc, knight):
 
     if black_knight_lives == 3:
-        black_knight_lives = print(f"\n\n\n{player} dodges the Black Knight's {random_attack}, steps aside, and cuts the Black Knight's left arm off with his {attack}. Blood spurts from the knight's open shoulder.\n\n{player}: Now stand aside, worthy adversary.\nBlack Knight: 'Tis but a scratch.\n{player}: A SCRATCH? Your arm's off!\nBlack Knight: No it isn't!\n{player}: Well what's that then? (pointing to the arm lying on the ground)\nBlack Knight: I've had worse.\n{player}: You LIAR!\nBlack Knight: Come on, you pansy!\n")
+        black_knight_lives = print(f"\n\n\n{player}{Y(f' dodges the {knight}')}{Y(f'{punc}s ')}{random_attack}{Y(f' hand, steps aside, and cuts the {knight}{punc}')}{Y(f's left arm off with his ')}{crayons.blue(attack)}{Y(f' hand. Blood spurts from the knight{punc}')}{Y('s open shoulder.')}\n\n{player}{Y(': Now stand aside, worthy adversary.')}\n{knight}{Y(f': {punc}Tis but a scratch.')}\n{player}{Y(f': A SCRATCH? Your arm{punc}')}{Y('s off!')}\n{knight}{Y(f': No it isn{punc}')}{Y('t!')}\n{player}{Y(f': Well what{punc}')}{Y('s that then? (pointing to the arm lying on the ground)')}\n{knight}{Y(f': I{punc}')}{Y('ve had worse.')}\n{player}{Y(': You LIAR!')}\n{knight}{Y(': Come on, you pansy!')}\n")
         return black_knight_lives
     elif black_knight_lives == 2:
-        black_knight_lives = print(f"\n\n\n{player} dodges the armless Black Night's swift {random_attack} kick! {player} easily cuts off the black knight's right arm causing it to drop to the ground. Blood spatters freely from the stump.\n\nBlack Knight: Come on then!\n{player}: What?!?\nBlack Knight: Have at you!\n{player}: You are indeed brave, sir knight, but the fight is mine!.\nBlack Knight: Ohhh, had enough, eh?\n{player}: Look, you stupid bastard, you've got no arms left!\nBlack Knight: Yes I have!\n{player}: LOOK!!!\nBlack Knight: Just a flesh wound!")
+        black_knight_lives = print(f"\n\n\n{player}{Y(f' dodges the {knight}')}{Y(f'{punc}s swift')} {random_attack} {Y(f'kick!')} {player} {Y(f'easily cuts off the ')}{knight}{punc}{Y(f's right arm causing it to drop to the ground. Blood spatters freely from the stump.')}\n\n{knight}{Y(f': Come on then!')}\n{player}{Y(f': What?!?')}\n{knight}{Y(f': Have at you!')}\n{player}{Y(f': You are indeed brave, sir knight, but the fight is mine!.')}\n{knight}{Y(f': Ohhh, had enough, eh?')}\n{player}{Y(f': Look, you stupid bastard, you{punc}')}{Y(f've got no arms left!')}\n{knight}{Y(f': Yes I have!')}\n{player}{Y(f': LOOK!!!')}\n{knight}{Y(f': Just a flesh wound!')}")
         return black_knight_lives
     elif black_knight_lives == 1:
-        black_knight_lives = print("1 lives left")
+        black_knight_lives = print(f"\n\n\n{player}{Y(f' dodges the {knight}')}{Y(f'{punc}s single-legged')} {random_attack} {Y(f'kick!')} \n\n{player}{Y(f': I{punc}ll have your leg!')} \n\n\n{Y(f'({player}')} {Y(f'chops off the {knight}')}{Y(f'{punc}s leg with his')} {attack} {Y('hand)')}\n\n{knight}{Y(f': (hopping) Right!  I{punc}')}{Y(f'll do you for that!')}\n{player}{Y(f': You{punc}ll *WHAT*?')}\n{knight}{Y(f': Come {punc}ere!')}")
+        return black_knight_lives
+    elif black_knight_lives == 0:
+        black_knight_lives = print(f"\n\n{player}{Y(f': (tiring of this)  What{punc}re you going to do, bleed on me?')}\n{knight}{Y(f': I{punc}m *INVINCIBLE*!!!')} \n{Y(f'{player}')} {Y(f': You{punc}re a looney....')}\n{knight}{Y(f': The {knight}')} {Y(f'ALWAYS TRIUMPHS! Have at you!!')} \n\n{Y(f'(hopping around, trying to kick {player}')} {Y(f'with his one remaining leg) {player}')}{Y(f' shrugs his shoulders and, with a mighty swing, removes the {knight}')}{Y(f'{punc}')}{Y(f's last appendage. The Knight falls to the ground. He looks about, realizing he can{punc}')}{Y(f't move.')}\n\n{player}{Y(f': Okay, we{punc}ll call it a draw. Come, Pasty! (they {punc}ride{punc} away)')}\n{knight}{Y(f': (calling after them) Oh! Had enough, eh? Come back and take what{punc}s coming to you, you yellow bastards!! Come back here and take what{punc}s coming to you! {punc}ll bite your legs off!')}")
         return black_knight_lives
 
+# {Y(f': <tiring of this>  What{punc}re you going to do, bleed on me?')}\n{knight}{Y(f': I{punc}m *INVINCIBLE*!!!.')}\n{player}{Y(f'You{punc}re a looney....')}\n{knight}{Y(f': The Black Knight ALWAYS TRIUMPHS! Have at you!! <hopping around, trying to kick {player} with his one remaining leg>')
 
-def player_blocks_print(blocks_left, random_attack, answer_king_queen, black_knight_lives, player_shield_blocks, player):
 
-    if player_shield_blocks == 3 and black_knight_lives > 2:
+def player_blocks_print(blocks_left, random_attack, answer_king_queen, black_knight_lives, player_shield_blocks, player, Y, knight, punc):
+
+    if player_shield_blocks == 2 and black_knight_lives > 2:
         blocks_left = print(
-            f"\nThe Black Knight dodges {player}'s strike, and hurls his {random_attack} at {player}.\n\n{player} blocks the Black Knight's {random_attack} but remains unscathed!\n\n{player}: Aha! You are as weak as I thought!\nBlack Knight: None before have passed! You will see!\n")
+            f"\n{Y('The')} {knight} {Y(f'dodges {player}')}{Y(f'{punc}')}{Y(f's strike, and hurls his {random_attack}')} {Y(f'hand at {player}')}{Y('.')}\n\n{player} {Y(f'blocks the {knight}')}{Y(f'{punc}')}{Y(f's {random_attack} ')}{Y(f'but remains unscathed!')}\n\n{player}{Y(f': Aha! You are as weak as I thought!')}\n{knight}{Y(f': None before have passed! You')}{Y(f'{punc}ll see!')}\n")
         return blocks_left
-    elif player_shield_blocks == 3 and black_knight_lives <= 2:
-        blocks_left = print(
-            f"\n Surprising fast for having no arms, the Black Knight dodges {player}'s strike, and kicks his {random_attack} at {player}.\n\n{player} blocks the Black Knight's {random_attack} but remains unscathed!\n\n{player}: Aha! You are as weak as I thought!\nBlack Knight: None before have passed! I need no arms to show you that! You will see!\n")
-        return blocks_left
-    elif player_shield_blocks == 2 and black_knight_lives > 2:
-        blocks_left = print(
-            f"\n\nOnce again the Black Knight dodges {player}'s strike, and catapult's his {random_attack} at {player}.\n\n {player} barely blocks the Black Knight's {random_attack} and stumbles backwards from the blow!\n\nThat was a clsoe one sir knight! But I am a {answer_king_queen}, do you think I would be so easily conquered?\n")
     elif player_shield_blocks == 2 and black_knight_lives <= 2:
         blocks_left = print(
-            f"\n\nOnce again the Black Knight dodges {player}'s strike, and super kicks his {random_attack} at {player}.\n\n {player} barely blocks the Black Knight's {random_attack} and stumbles backwards from the blow!\n\nThat was a close one sir knight! But I am a {answer_king_queen}, do you think I would be so easily conquered?\n\n Black Knight: You will soon fall to the legless Black Knight!\n")
+            f"\n{Y('S urpisingly fast for having no arms, the')} {knight} {Y(f'dodges {player}')}{Y(f'{punc}')}{Y(f's strike, and kicks his {random_attack}')} {Y(f'foot at {player}')}{Y('.')}\n\n{player} {Y(f'blocks the {knight}')}{Y(f'{punc}')}{Y(f's {random_attack} ')}{Y(f'but remains unscathed!')}\n\n{player}{Y(f': Aha! You are as weak as I thought!')}\n{knight}{Y(f': None before have passed! You')}{Y(f'{punc}ll see!')}\n")
         return blocks_left
     elif player_shield_blocks == 1 and black_knight_lives > 2:
         blocks_left = print(
-            f"\n\nknight hurls {random_attack} at {player}\n")
+            f"\n{Y('Once again the')} {knight} {Y(f'dodges {player}')}{Y(f'{punc}')}{Y(f's strike, and catapult{punc}')}{Y(f's his {random_attack}')} {Y(f'hand at {player}')}{Y('.')}\n\n{player} {Y(f'varely blocks the {knight}')}{Y(f'{punc}')}{Y(f's {random_attack} ')}{Y(f'and stumbles backwards from the blow!')}\n\n{player}{Y(f': That was a clsoe one sir knight! But I am a')}\n{answer_king_queen}{Y(f', do you think I would be so easily conquered?')}\n")
+        return blocks_left
     elif player_shield_blocks == 1 and black_knight_lives > 2:
         blocks_left = print(
-            f"\n\n, the Black Knight dodges {player}'s strike, and kicks his random_attack at player knocks over {player} and destoys the {answer_king_queen}'s shield {player}: (getting up) blah blah blah\n")
+            f"\n{Y('Once again the')} {knight} {Y(f'dodges {player}')}{Y(f'{punc}')}{Y(f's strike, and super kicks his {random_attack}')} {Y(f'foot at {player}')}{Y('.')}\n\n{player} {Y(f'barely blocks the {knight}')}{Y(f'{punc}')}{Y(f's {random_attack} ')}{Y(f'and stumbles backwards from the blow!')}\n\n{player}{Y(f': That was a clsoe one sir knight! But I am a')}\n{answer_king_queen}{Y(f', do you think I would be so easily conquered?')}\n{knight}{Y(f': You will soon fall to the legless {knight}')}{Y('!')}\n")
+        return blocks_left
+    elif player_shield_blocks == 0 and black_knight_lives > 2:
+        blocks_left = print(
+            f"\n{Y('The')} {knight} {Y(f'dances around {player}')}{Y(f'{punc}')}{Y(f's strike, and strikes {player}')} {Y(f'with his {random_attack}')} {Y(f'hand.')}\n\n{player} {Y(f' blocks the {random_attack}')} {Y(f'and is knocked over onto the ground, destroying the {answer_king_queen}')}{Y(f'{punc}')}{Y('s shield in the process')}\n\n{player}{Y(f': (getting up) I suggest you enjoy this moment while it lasts, because this will be your last!')}\n{knight}{Y(f'What happened? Is {player}')}{Y(f', noble {answer_king_queen}')}{Y('of the Britons')} {Y(f'scared now?!')}{player}{Y(f': You{punc}')}{Y('ll pay for mocking the throne!')}\n")
+        return blocks_left
+    elif player_shield_blocks == 0 and black_knight_lives <= 2:
+        blocks_left = print(
+            f"\n{Y('The')} {knight} {Y(f'dances around {player}')}{Y(f'{punc}')}{Y(f's strike, and jump kicks {player}')} {Y(f'with his {random_attack}')} {Y(f'foot.')}\n\n{player} {Y(f' blocks the {random_attack}')} {Y(f', but is knocked over onto the ground, destroying the {answer_king_queen}')}{Y(f'{punc}')}{Y('s shield in the process')}\n\n{player}{Y(f': (getting up) I suggest you enjoy this moment while it lasts, because this will be your last!')}\n{knight}{Y(f'What happened? Is {player}')}{Y(f', noble {answer_king_queen}')}{Y('of the Britons')} {Y(f'scared now?!')}{player}{Y(f': You{punc}')}{Y('ll pay for mocking the throne!')}\n")
         return blocks_left
 
 
@@ -150,7 +157,7 @@ def main():
                 quit()
             if input2 == 1:
                 print(
-                    f"\n\n\n{Y('<clop clop clop>')}\n\n{Y('<clop clop clop>')}\n\n{Y('<clop clop clop>')}\n\n{Y('chhange this to the script of seeing black knight fight at bridge!')}\n\n\n\n{Y(f'{knight}')}{Y(': NONE SHALL PASS.')}\n\n{Y(f'{player}')}{Y(': (taken aback) What?')}\n\n{Y(f'{knight}')}{Y(': NONE SHALL PASS.')}\n\n{Y(f'{player}')}{Y(': I have no quarrel with you, good sir knight, but I must cross this bridge.')}\n\n{Y(f'{knight}')}{Y(': THEN YOU SHALL DIE.')}\n\n{Y(f'{player}')}{Y(f': I *command* you, as {answer_king_queen}')}{Y(' of the Britons, to stand aside.')}\n\n{Y(f'{knight}')}{Y(f': I MOVE FOR NO {answer_king_queen.upper()}')}{Y('.')}\n\n{Y(f'{player}')}{Y(': So be it!   (draws hand and shield)')}")
+                    f"\n\n\n{Y('(clop clop clop)')}\n\n{Y('(clop clop clop)')}\n\n{Y('(clop clop clop)')}\n\n{Y('chhange this to the script of seeing black knight fight at bridge!')}\n\n\n\n{Y(f'{knight}')}{Y(': NONE SHALL PASS.')}\n\n{Y(f'{player}')}{Y(': (taken aback) What?')}\n\n{Y(f'{knight}')}{Y(': NONE SHALL PASS.')}\n\n{Y(f'{player}')}{Y(': I have no quarrel with you, good sir knight, but I must cross this bridge.')}\n\n{Y(f'{knight}')}{Y(': THEN YOU SHALL DIE.')}\n\n{Y(f'{player}')}{Y(f': I *command* you, as {answer_king_queen}')}{Y(' of the Britons, to stand aside.')}\n\n{Y(f'{knight}')}{Y(f': I MOVE FOR NO {answer_king_queen.upper()}')}{Y('.')}\n\n{Y(f'{player}')}{Y(': So be it!   (draws hand and shield)')}")
                 break
             else:
                 print(
@@ -170,24 +177,28 @@ def main():
                                    black_knight_lives, player, Y)
             random_attack = cpu_random_attack(rock, paper, scissors)
 
+            if attack != "Rock" and attack != "Paper" and attack != "Scissors" and attack != "Flesh Wound":
+                print(
+                    f"rock boy")
+
             if attack == "Rock":
                 print(
-                    f"\n\n\n{player} strikes the Black Knight with a very hard {attack}... the the Black Knight simultaneously strikes back with his {random_attack}")
+                    f"\n\n\n{answer_king_queen} {player} {Y(f'strikes the {knight}')}{Y(f' with a very hard {attack}')}{Y(f'... the the {knight}')} {Y(f'simultaneously strikes back with his {random_attack}')}")
 
-                if random_attack == "Scissors":
+                if random_attack == (f"{scissors}"):
                     # print black night saying oh no my arms! etc until dead
                     black_knight_lives -= 1
                     black_knight_dismember_print(
-                        black_knight_lives, attack, random_attack, player)
+                        black_knight_lives, attack, random_attack, player, Y, punc, knight)
                     # remaining_lives_block(
                     #     black_knight_lives, player_shield_blocks, player)
-                elif random_attack == "Paper":
+                elif random_attack == (f"{paper}"):
                     player_shield_blocks -= 1
                     player_blocks_print(
-                        player_shield_blocks, random_attack, answer_king_queen, black_knight_lives, player_shield_blocks, player)
+                        player_shield_blocks, random_attack, answer_king_queen, black_knight_lives, player_shield_blocks, player, Y, knight, punc)
                     # remaining_lives_block(
                     #     black_knight_lives, player_shield_blocks, player)
-                elif random_attack == "Rock":
+                elif random_attack == (f"{rock}"):
                     tie(Y, knight)
                     # remaining_lives_block(
                     #     black_knight_lives, player_shield_blocks, player)
@@ -221,6 +232,7 @@ def main():
                     player_shield_blocks -= 1
                     print(
                         f"Black Knight Lives: {black_knight_lives}\n{player}'s Shield blocks left: {player_shield_blocks}")
+
         break
 
         # if input1 == "Rock" and random_attack == "Scissors":
