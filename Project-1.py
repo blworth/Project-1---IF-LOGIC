@@ -162,15 +162,12 @@ def player_attack_input(attack, answer_king_queen, player, knight, random_attack
                 print(f"\n{R('Please enter:')} {R(f'{punc}{rock}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{paper}')}{R(f'{punc}')}{R(', or')} {R(f'{punc}{scissors}')}{R(f'{punc}')}")
             elif flesh_1 == "Rock":
                 pick_one = rock
-                # flesh_1 = "r"
                 break
             elif flesh_1 == "Paper":
                 pick_one = paper
-                # flesh_1 = "p"
                 break
             elif flesh_1 == "Scissors":
                 pick_one = scissors
-                # flesh_1 = "s"
                 break
 
         while (attack != "Exit"):
@@ -194,6 +191,42 @@ def player_attack_input(attack, answer_king_queen, player, knight, random_attack
 
         print(f"\n{answer_king_queen} {player} {Y(f'strikes the {knight}')}{Y(' with a')} {flesh}{Y(f'({pick_one}')}{Y(f'/')}{Y(f'({pick_two}')}{Y(f')... the {knight}')} {Y(f'simultaneously strikes back with his {random_attack}')}")
         return flesh_attack
+
+
+def flesh_wound_win_lose(random_attack, rock, paper, scissors, answer_king_queen, player, flesh, punc, Y, knight, attack, black_knight_limbs, player_shield_blocks):
+    if (random_attack == (f"{paper}") and (attack == "Rock/Paper" or attack == "Paper/Rock")) or (random_attack == (f"{rock}") and (attack == "Rock/Scissors" or attack == "Scissors/Rock")) or (random_attack == (f"{scissors}") and (attack == "Scissors/Paper" or attack == "Paper/Scissors")):
+        black_knight_limbs += 1
+        player_shield_blocks -= 1
+        attack = flesh
+        print_player_blocks(
+            player_shield_blocks, random_attack, answer_king_queen, black_knight_limbs, player, Y, knight, punc)
+        print(
+            f"\n{Y(f'Wow! {answer_king_queen} {player}')} {Y(f'... Even with a {flesh}')}{Y(f' you managed to lose a round to the {knight}')}")
+        print(
+            f"{knight}{Y(': gains 1 limb back')}\n{answer_king_queen} {player}{Y(f': loses one block')}")
+    elif (random_attack == (f"{paper}") and (attack == "Scissors/Paper" or attack == "Scissors/Rock" or attack == "Rock/Scissors" or attack == "Paper/Scissors")) or (random_attack == (f"{rock}") and (attack == "Paper/Scissors" or attack == "Paper/Rock" or attack == "Scissors/Paper" or attack == "Rock/Paper")) or (random_attack == (f"{scissors}") and (attack == "Rock/Paper" or attack == "Rock/Scissors" or attack == "Paper/Rock" or attack == "Scissors/Rock")):
+
+        black_knight_limbs -= 1
+        attack = flesh
+        print_black_knight_dismember(
+            black_knight_limbs, attack, random_attack, player, Y, punc, knight, answer_king_queen)
+        print(
+            f"\n\n{Y(f'Don{punc}t feel too proud of yourself, {answer_king_queen} {player}')}{Y(f'... You had to use a {flesh}')}{Y(f' to get the job done.')}")
+    return black_knight_limbs, player_shield_blocks
+
+
+def normal_attack_win_lose(random_attack, scissors, attack, answer_king_queen, knight, punc, player, black_knight_limbs, player_shield_blocks, rock, paper, Y):
+    if (random_attack == (f"{scissors}") and attack == rock) or (random_attack == (f"{rock}") and attack == paper) or (random_attack == (f"{paper}") and attack == scissors):
+        black_knight_limbs -= 1
+        print_black_knight_dismember(
+            black_knight_limbs, attack, random_attack, player, Y, punc, knight, answer_king_queen)
+    elif (random_attack == (f"{paper}") and attack == rock) or (random_attack == (f"{scissors}") and attack == paper) or (random_attack == (f"{rock}") and attack == scissors):
+        player_shield_blocks -= 1
+        print_player_blocks(
+            player_shield_blocks, random_attack, answer_king_queen, black_knight_limbs, player, Y, knight, punc)
+    elif (random_attack == (f"{rock}") and attack == rock) or (random_attack == (f"{paper}") and attack == paper) or (random_attack == (f"{scissors}") and attack == scissors):
+        print_tie(Y, knight)
+    return black_knight_limbs, player_shield_blocks
 
 
 def main():
@@ -248,38 +281,20 @@ def main():
                 print_choose_attack_repeat(
                     rock, paper, scissors, flesh, R, punc)
 
-            attack = player_attack_input(attack, answer_king_queen, player, knight,
-                                         random_attack, rock, paper, scissors, Y, flesh, punc, R)
+            attack = player_attack_input(
+                attack, answer_king_queen, player, knight, random_attack, rock, paper, scissors, Y, flesh, punc, R)
 
-            if (random_attack == (f"{scissors}") and attack == rock) or (random_attack == (f"{rock}") and attack == paper) or (random_attack == (f"{paper}") and attack == scissors):
-                black_knight_limbs -= 1
-                print_black_knight_dismember(
-                    black_knight_limbs, attack, random_attack, player, Y, punc, knight, answer_king_queen)
-            elif (random_attack == (f"{paper}") and attack == rock) or (random_attack == (f"{scissors}") and attack == paper) or (random_attack == (f"{rock}") and attack == scissors):
-                player_shield_blocks -= 1
-                print_player_blocks(
-                    player_shield_blocks, random_attack, answer_king_queen, black_knight_limbs, player, Y, knight, punc)
-            elif (random_attack == (f"{rock}") and attack == rock) or (random_attack == (f"{paper}") and attack == paper) or (random_attack == (f"{scissors}") and attack == scissors):
-                print_tie(Y, knight)
+            normal_new_limb_block = normal_attack_win_lose(
+                random_attack, scissors, attack, answer_king_queen, knight, punc, player, black_knight_limbs, player_shield_blocks, rock, paper, Y)
 
-            if (random_attack == (f"{paper}") and (attack == "Rock/Paper" or attack == "Paper/Rock")) or (random_attack == (f"{rock}") and (attack == "Rock/Scissors" or attack == "Scissors/Rock")) or (random_attack == (f"{scissors}") and (attack == "Scissors/Paper" or attack == "Paper/Scissors")):
-                black_knight_limbs += 1
-                player_shield_blocks -= 1
-                attack = flesh
-                print_player_blocks(
-                    player_shield_blocks, random_attack, answer_king_queen, black_knight_limbs, player, Y, knight, punc)
-                print(
-                    f"\n{Y(f'Wow! {answer_king_queen} {player}')} {Y(f'... Even with a {flesh}')}{Y(f' you managed to lose a round to the {knight}')}")
-                print(
-                    f"{knight}{Y(': gains 1 limb back')}\n{answer_king_queen} {player}{Y(f': loses one block')}")
-            elif (random_attack == (f"{paper}") and (attack == "Scissors/Paper" or attack == "Scissors/Rock" or attack == "Rock/Scissors" or attack == "Paper/Scissors")) or (random_attack == (f"{rock}") and (attack == "Paper/Scissors" or attack == "Paper/Rock" or attack == "Scissors/Paper" or attack == "Rock/Paper")) or (random_attack == (f"{scissors}") and (attack == "Rock/Paper" or attack == "Rock/Scissors" or attack == "Paper/Rock" or attack == "Scissors/Rock")):
-                black_knight_limbs -= 1
-                attack = flesh
-                print_black_knight_dismember(
-                    black_knight_limbs, attack, random_attack, player, Y, punc, knight, answer_king_queen)
-                print(
-                    f"\n\n{Y(f'Don{punc}t feel too proud of yourself, {answer_king_queen} {player}')} {Y(f'... You had to use a {flesh}')}{Y(f' to get the job done.')}")
+            black_knight_limbs = normal_new_limb_block[0]
+            player_shield_blocks = normal_new_limb_block[1]
 
+            flesh_wound_new_limb_block = flesh_wound_win_lose(
+                random_attack, rock, paper, scissors, answer_king_queen, player, flesh, punc, Y, knight, attack, black_knight_limbs, player_shield_blocks)
+
+            black_knight_limbs = flesh_wound_new_limb_block[0]
+            player_shield_blocks = flesh_wound_new_limb_block[1]
         break
 
 
