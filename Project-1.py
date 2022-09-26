@@ -3,6 +3,8 @@
 """This script will perform the game rock paper scissors"""
 import random
 import crayons
+from time import sleep
+import sys
 # this function will end the game when executed
 
 
@@ -12,7 +14,7 @@ def player_attack():
 
 
 def print_commence_battle(player_shield_blocks, black_knight_limbs, player, Y, random_attack, attack, knight):
-    if player_shield_blocks == 3 and black_knight_limbs == 4 and (attack != random_attack):
+    if player_shield_blocks == 3 and black_knight_limbs == 4 and (attack != random_attack) and (attack == "Rock" or attack == "Paper" or attack == "Scissors" or attack == "Flesh wound"):
         print(
             f"\n{Y(f'A battle ensues, where {player}')}{Y(f', realitvely unencumbered by armor, has an advantage at dodging the slow heavy strikes by the {knight}')}{Y(f'.')}")
 
@@ -31,7 +33,6 @@ def print_remaining_lives_block(black_knight_limbs, player_shield_blocks, player
 
 
 def pick_name(Y, punc):
-    # global king_queen
     print(f"{Y('Please enter your name: ')}")
     name = input("    ").strip().capitalize()
     if name == "Exit":
@@ -146,13 +147,34 @@ def print_player_blocks(player_shield_blocks, random_attack, answer_king_queen, 
             f"\n{Y('The')} {knight} {Y(f'easily predicts {answer_king_queen} {player}')} {Y(f'strike and counters the {answer_king_queen}')}{Y(f'{punc}s')} {attack} {Y(f'hand with a blazingly fast, single-legged, jumping {random_attack}')} {Y('kick.')} \n{Y('The')} {answer_king_queen}{Y(f', hit with such force, falls on both knees.')}\n\n{knight}{Y(f': Well,')} {answer_king_queen} {player}{Y(f', it seems you shall not pass afterall.')}\n{answer_king_queen} {player}{Y(f': (coughing and unable to speak well) It seems so... fair knight... I have... underestima... ({answer_king_queen} {player}')} {Y('dies)')}\n{knight}{Y(f': RIP lol')}\n\n\n{C('GAME OVER')} {answer_king_queen} {player}{C('!')} {Y(f'You have fallen to the')} {knight} {Y('and will never continue on to find the')} {C('Holy Grail')}{Y('!')}")
         return blocks_left
 
+    for letter in l:
+        print(letter, end='')
+        sys.stdout.flush()
+        sleep(.01)
 
-def print_game_instructions(rock, paper, scissors, flesh, C, knight, Y):
+
+def print_game_instructions(rock, paper, scissors, flesh, C, knight, Y, punc, R):
     print(f"\n\n{Y('Welcome to')} {rock}{Y(',')} {paper}{Y(',')} {scissors}{Y(',')} {flesh}{Y('.')}\n\n      {Y(f'In this game')} {C('you')} {Y(f'will be playing against the {knight}')} {Y('from Monty Python and the Holy Grail.')}\n      {Y(f'The goal is to to beat the {knight}')} {Y('and cross the bridge by choosing 1 of the 4 options available:')}\n\n{rock}{Y(':')}\n   {Y('Wins against')} {scissors}\n   {Y('Loses against')} {paper}\n\n{paper}{Y(':')}\n   {Y('Wins against')} {rock}\n   {Y('Loses against')} {scissors}\n\n{scissors}{Y(':')}\n   {Y('Wins against')} {paper}\n   {Y('Loses against')} {rock}\n\n{flesh}{Y(':')}\n   {Y('You will see...')}\n\n\n")
+    print(
+        f"{Y('Please enter:')}\n   {Y(f'{punc}')}{C('1')}{Y(f'{punc} to continue!')}\n   {Y(f'{punc}')}{C('Exit')}{Y(f'{punc} to end your journey.')}")
+    continue_exit = ""
+
+    while (continue_exit != 1 or continue_exit != "Exit"):
+        continue_exit = input("    ").strip()
+        input2 = ""
+        if continue_exit.isdigit():
+            input2 = int(continue_exit)
+        elif continue_exit.capitalize() == "Exit":
+            print_exit_game(Y, punc)
+            quit()
+        if input2 == 1:
+            break
+        else:
+            print_game_start_repeat(punc, C, R)
 
 
 def print_game_start(answer_king_queen, player, punc, C, Y):
-    print(f"\n{Y('Okay')} {answer_king_queen} {player}{Y(f', Let{punc}s go ahead and start the adventure!')}\n\n{Y('Please enter:')}\n   {Y(f'{punc}')}{C('1')}{Y(f'{punc} to grab your coconuts and gallop away!')}\n   {Y(f'{punc}')}{C('Exit')}{Y(f'{punc} to end your journey.')}")
+    print(f"\n{Y('Okay')} {answer_king_queen} {player}{Y(f', Let{punc}s go ahead and start the adventure!')}\n\n{Y('Please enter:')}\n   {Y(f'{punc}')}{C('1')}{Y(f'{punc} to grab your coconuts and gallop away!')}\n   {C(f'(You can enter {punc}Exit{punc} at any time during the game to leave)')}")
 
 
 def print_game_start_repeat(punc, C, R):
@@ -192,10 +214,10 @@ def player_attack_input(attack, answer_king_queen, player, knight, random_attack
 
         while (attack != "Exit"):
             print(
-                f"{Y(f'    Please choose the')} {C('first')} {Y('attack you would like to perform:')}")
+                f"{Y(f'    Choose the')} {C('first')} {Y('attack you would like to perform:')}")
             flesh_1 = input("    ").strip().capitalize()
             if flesh_1 != "Rock" and flesh_1 != "Paper" and flesh_1 != "Scissors" and flesh_1 != "Exit":
-                print(f"\n{R('Please enter:')} {R(f'{punc}{rock}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{paper}')}{R(f'{punc}')}{R(', or')} {R(f'{punc}{scissors}')}{R(f'{punc}')}")
+                print(f"\n{R('Please enter:')} {R(f'{punc}{rock}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{paper}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{scissors}')}{R(f'{punc}')}{R(', or')} {R(f'{punc}')}{C('Exit')}{R(f'{punc}')}")
             elif flesh_1 == "Rock":
                 pick_one = rock
                 break
@@ -211,11 +233,11 @@ def player_attack_input(attack, answer_king_queen, player, knight, random_attack
 
         while (attack != "Exit"):
             print(
-                f"\n{Y(f'    Please choose the')} {C('second')} {Y(' attack you would like to perform:')}")
+                f"\n{Y(f'    Choose the')} {C('second')} {Y('attack you would like to perform:')}")
             flesh_2 = input("    ").strip().capitalize()
 
             if flesh_2 != "Rock" and flesh_2 != "Paper" and flesh_2 != "Scissors" and flesh_2 != "Exit" or flesh_1 == flesh_2:
-                print(f"\n{R('Please enter:')} {R(f'{punc}{rock}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{paper}')}{R(f'{punc}')}{R(', or')} {R(f'{punc}{scissors}')}{R(f'{punc}')}\n{R(f'      <Both choices can{punc}t be the same>')}")
+                print(f"\n{R('Please enter:')} {R(f'{punc}{rock}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{paper}')}{R(f'{punc}')}{R(',')} {R(f'{punc}{scissors}')}{R(f'{punc}')}{R(', or')} {R(f'{punc}')}{C('Exit')}{R(f'{punc}')}\n         {C('<')}{R(f'Both choices can{punc}t be the same')}{C('>')}")
             elif flesh_2 == "Rock":
                 pick_two = rock
                 break
@@ -230,7 +252,7 @@ def player_attack_input(attack, answer_king_queen, player, knight, random_attack
                 quit()
 
         flesh_attack = (f"{flesh_1}/{flesh_2}")
-
+        spacing()
         print(f"\n{answer_king_queen} {player} {Y(f'strikes the {knight}')}{Y(' with a')} {flesh}{Y(f'({pick_one}')}{Y(f'/')}{Y(f'({pick_two}')}{Y(f')... the {knight}')} {Y(f'simultaneously strikes back with his {random_attack}')}")
         return flesh_attack
 
@@ -243,7 +265,7 @@ def initial_attack_input(Y, punc):
     return attack
 
 
-def flesh_wound_win_lose(random_attack, rock, paper, scissors, answer_king_queen, player, flesh, punc, Y, knight, attack, black_knight_limbs, player_shield_blocks, C):
+def flesh_wound_win_lose(random_attack, rock, paper, scissors, answer_king_queen, player, flesh, punc, Y, knight, attack, black_knight_limbs, player_shield_blocks, C, R):
     if (random_attack == (f"{paper}") and (attack == "Rock/Paper" or attack == "Paper/Rock")) or (random_attack == (f"{rock}") and (attack == "Rock/Scissors" or attack == "Scissors/Rock")) or (random_attack == (f"{scissors}") and (attack == "Scissors/Paper" or attack == "Paper/Scissors")):
         black_knight_limbs += 1
         player_shield_blocks -= 1
@@ -265,7 +287,7 @@ def flesh_wound_win_lose(random_attack, rock, paper, scissors, answer_king_queen
     return black_knight_limbs, player_shield_blocks
 
 
-def normal_attack_win_lose(random_attack, scissors, attack, answer_king_queen, knight, punc, player, black_knight_limbs, player_shield_blocks, rock, paper, Y, C):
+def normal_attack_win_lose(random_attack, scissors, attack, answer_king_queen, knight, punc, player, black_knight_limbs, player_shield_blocks, rock, paper, Y, C, R):
     if (random_attack == (f"{scissors}") and attack == rock) or (random_attack == (f"{rock}") and attack == paper) or (random_attack == (f"{paper}") and attack == scissors):
         black_knight_limbs -= 1
         print_black_knight_dismember(
@@ -277,6 +299,10 @@ def normal_attack_win_lose(random_attack, scissors, attack, answer_king_queen, k
     elif (random_attack == (f"{rock}") and attack == rock) or (random_attack == (f"{paper}") and attack == paper) or (random_attack == (f"{scissors}") and attack == scissors):
         print_tie(Y, knight)
     return black_knight_limbs, player_shield_blocks
+
+
+def spacing():
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
 
 def main():
@@ -295,9 +321,14 @@ def main():
     player_shield_blocks = 3
 
     while input1 != "Exit":
-        print_game_instructions(rock, paper, scissors, flesh, C, knight, Y)
+
+        print_game_instructions(rock, paper, scissors,
+                                flesh, C, knight, Y, punc, R)
+        spacing()
         player = pick_name(Y, punc)
+        spacing()
         answer_king_queen = pick_king_queen(Y, punc, R)
+        spacing()
         print_game_start(answer_king_queen, player, punc, C, Y)
 
         while (input1 != 1 or input1 != "Exit"):
@@ -322,6 +353,7 @@ def main():
             print_remaining_lives_block(
                 black_knight_limbs, player_shield_blocks, player, knight, Y, answer_king_queen)
             attack = initial_attack_input(Y, punc)
+            spacing()
             random_attack = cpu_random_attack(rock, paper, scissors)
             print_commence_battle(
                 player_shield_blocks, black_knight_limbs, player, Y, random_attack, attack, knight)
@@ -334,13 +366,13 @@ def main():
                 attack, answer_king_queen, player, knight, random_attack, rock, paper, scissors, Y, flesh, punc, R, percent, C)
 
             normal_new_limb_block = normal_attack_win_lose(
-                random_attack, scissors, attack, answer_king_queen, knight, punc, player, black_knight_limbs, player_shield_blocks, rock, paper, Y, C)
+                random_attack, scissors, attack, answer_king_queen, knight, punc, player, black_knight_limbs, player_shield_blocks, rock, paper, Y, C, R)
 
             black_knight_limbs = normal_new_limb_block[0]
             player_shield_blocks = normal_new_limb_block[1]
 
             flesh_wound_new_limb_block = flesh_wound_win_lose(
-                random_attack, rock, paper, scissors, answer_king_queen, player, flesh, punc, Y, knight, attack, black_knight_limbs, player_shield_blocks, C)
+                random_attack, rock, paper, scissors, answer_king_queen, player, flesh, punc, Y, knight, attack, black_knight_limbs, player_shield_blocks, C, R)
 
             black_knight_limbs = flesh_wound_new_limb_block[0]
             player_shield_blocks = flesh_wound_new_limb_block[1]
